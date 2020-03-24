@@ -1,12 +1,10 @@
 ---
 AWSTemplateFormatVersion: '2010-09-09'
 Description: 'Based on AWS Sample Template EC2InstanceWithSecurityGroupSample.
-  Create an EC2 instance running the Amazon Linux AMI. The AMI is chosen based
-  on the region in which the stack is run. This example creates an EC2 security group
-  for the instance to give you SSH access.'
+  Create an EC2 with a public IP. Build an SSH Security Group.'
 
-# Parameters (these are what you pass in)
-# For paramaters with defaults, you do not need to provide an input. If they don't have a default, you need to pass a value in
+# Parameters
+# For paramaters with defaults you do not need to provide an input. If they don't have a default, you need to pass a value in
 Parameters:
 
   RegionId: # It looks like the default execution region can be referenced using AWS::Region
@@ -28,7 +26,6 @@ Parameters:
   KeyName:
     Description: Name of an existing EC2 KeyPair to enable SSH access to the instance
     Type: AWS::EC2::KeyPair::KeyName
-    Default: "aws_salmoncow"
     ConstraintDescription: must be the name of an existing EC2 KeyPair.
 
   InstanceType:
@@ -90,7 +87,7 @@ Resources:
           - Ref: InstanceType
           - Arch
 
-  # SG
+  # SSH security group
   BaseSG:
     Type: AWS::EC2::SecurityGroup
     Properties:
