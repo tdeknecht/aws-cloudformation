@@ -1,0 +1,32 @@
+---
+Description: 'Route 53 Hosted Zone'
+
+Parameters:
+  Name:
+    Description: The name of the domain.
+    Type: String
+    
+  Comment:
+    Description: Any comments that you want to include about the hosted zone.
+    Type: String
+    Default: Managed by CloudFormation
+   
+Resources:
+  Zone:
+    Type: AWS::Route53::HostedZone
+    Properties: 
+      HostedZoneConfig: 
+        Comment:
+          Ref: Comment
+      Name:
+        Ref: Name
+
+Outputs:
+  ZoneId:
+    Description: Hosted zone ID
+    Value:
+      Ref: Zone
+
+  NameServers:
+    Description: Set of name servers for the hosted zone
+    Value: !Join [ ",", !GetAtt Zone.NameServers]
